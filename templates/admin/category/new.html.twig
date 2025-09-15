@@ -1,0 +1,27 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block admin_content %}
+<div class="flex justify-between items-center mb-6">
+  <h1 class="text-2xl font-bold">Nouvelle catégorie</h1>
+  <a href="{{ path('admin_category_index') }}" class="btn btn-outline">
+    <i class="fas fa-arrow-left"></i>
+    Retour à la liste
+  </a>
+</div>
+
+<div class="card bg-base-100 shadow-xl">
+  <div class="card-body">
+    {{ form_start(form, {'attr': {'class': 'space-y-4'}}) }}
+      {{ form_widget(form) }}
+      
+      <div class="card-actions justify-end mt-6">
+        <a href="{{ path('admin_category_index') }}" class="btn btn-outline">Annuler</a>
+        <button type="submit" class="btn btn-primary">
+          <i class="fas fa-save"></i>
+          Enregistrer
+        </button>
+      </div>
+    {{ form_end(form) }}
+  </div>
+</div>
+{% endblock %}

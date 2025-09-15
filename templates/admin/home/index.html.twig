@@ -1,0 +1,138 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Tableau de bord - Administration{% endblock %}
+
+{% block admin_content %}
+<div class="flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-bold text-gray-800">Tableau de bord</h1>
+    <div class="text-sm text-gray-500">
+        Bienvenue, {{ app.user.email }}
+    </div>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
+    <!-- Articles Card -->
+    <div class="card bg-white shadow rounded-lg p-6">
+        <div class="flex items-center">
+            <div class="p-3 rounded-full bg-blue-100 text-blue-600 mr-4">
+                <i class="fas fa-newspaper text-xl"></i>
+            </div>
+            <div>
+                <p class="text-gray-500 text-sm">Articles</p>
+                <p class="text-2xl font-bold">25</p>
+            </div>
+        </div>
+        <div class="mt-4">
+            <a href="{{ path('admin_post_index') }}" class="text-blue-600 hover:text-blue-800 text-sm font-medium">
+                Voir tous les articles →
+            </a>
+        </div>
+    </div>
+
+    <!-- Catégories Card -->
+    <div class="card bg-white shadow rounded-lg p-6">
+        <div class="flex items-center">
+            <div class="p-3 rounded-full bg-green-100 text-green-600 mr-4">
+                <i class="fas fa-tags text-xl"></i>
+            </div>
+            <div>
+                <p class="text-gray-500 text-sm">Catégories</p>
+                <p class="text-2xl font-bold">8</p>
+            </div>
+        </div>
+        <div class="mt-4">
+            <a href="{{ path('admin_category_index') }}" class="text-green-600 hover:text-green-800 text-sm font-medium">
+                Voir toutes les catégories →
+            </a>
+        </div>
+    </div>
+
+    <!-- Commentaires Card -->
+    <div class="card bg-white shadow rounded-lg p-6">
+        <div class="flex items-center">
+            <div class="p-3 rounded-full bg-yellow-100 text-yellow-600 mr-4">
+                <i class="fas fa-comments text-xl"></i>
+            </div>
+            <div>
+                <p class="text-gray-500 text-sm">Commentaires</p>
+                <p class="text-2xl font-bold">42</p>
+            </div>
+        </div>
+        <div class="mt-4">
+            <a href="{{ path('admin_comment_index') }}" class="text-yellow-600 hover:text-yellow-800 text-sm font-medium">
+                Voir tous les commentaires →
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <!-- Derniers articles -->
+    <div class="card bg-white shadow rounded-lg p-6">
+        <h2 class="text-lg font-bold text-gray-800 mb-4">Derniers articles</h2>
+        <div class="space-y-4">
+            <div class="border-b pb-4 last:border-0 last:pb-0">
+                <h3 class="font-medium text-gray-800">Comment créer un site web moderne avec Symfony</h3>
+                <p class="text-gray-500 text-sm mt-1">Publié le 12 sept 2025</p>
+                <div class="mt-2">
+                    <span class="badge badge-outline badge-sm">Technologie</span>
+                </div>
+            </div>
+            <div class="border-b pb-4 last:border-0 last:pb-0">
+                <h3 class="font-medium text-gray-800">Les meilleures pratiques de sécurité en développement web</h3>
+                <p class="text-gray-500 text-sm mt-1">Publié le 10 sept 2025</p>
+                <div class="mt-2">
+                    <span class="badge badge-outline badge-sm">Sécurité</span>
+                </div>
+            </div>
+            <div class="border-b pb-4 last:border-0 last:pb-0">
+                <h3 class="font-medium text-gray-800">Introduction à l'architecture MVC</h3>
+                <p class="text-gray-500 text-sm mt-1">Publié le 8 sept 2025</p>
+                <div class="mt-2">
+                    <span class="badge badge-outline badge-sm">Développement</span>
+                </div>
+            </div>
+        </div>
+        <div class="mt-4">
+            <a href="{{ path('admin_post_index') }}" class="btn btn-outline btn-sm">Voir tous les articles</a>
+        </div>
+    </div>
+
+    <!-- Activité récente -->
+    <div class="card bg-white shadow rounded-lg p-6">
+        <h2 class="text-lg font-bold text-gray-800 mb-4">Activité récente</h2>
+        <div class="space-y-4">
+            <div class="flex items-start">
+                <div class="p-2 bg-blue-100 rounded-full mr-3">
+                    <i class="fas fa-plus text-blue-600"></i>
+                </div>
+                <div>
+                    <p class="text-gray-800">Nouvel article créé</p>
+                    <p class="text-gray-500 text-sm">"Guide complet de Symfony" par Jean Dupont</p>
+                    <p class="text-gray-400 text-xs">Il y a 2 heures</p>
+                </div>
+            </div>
+            <div class="flex items-start">
+                <div class="p-2 bg-green-100 rounded-full mr-3">
+                    <i class="fas fa-comment text-green-600"></i>
+                </div>
+                <div>
+                    <p class="text-gray-800">Nouveau commentaire</p>
+                    <p class="text-gray-500 text-sm">Sur "Les bases de données relationnelles"</p>
+                    <p class="text-gray-400 text-xs">Il y a 5 heures</p>
+                </div>
+            </div>
+            <div class="flex items-start">
+                <div class="p-2 bg-yellow-100 rounded-full mr-3">
+                    <i class="fas fa-user-plus text-yellow-600"></i>
+                </div>
+                <div>
+                    <p class="text-gray-800">Nouvel utilisateur inscrit</p>
+                    <p class="text-gray-500 text-sm">Marie Martin</p>
+                    <p class="text-gray-400 text-xs">Il y a 1 jour</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

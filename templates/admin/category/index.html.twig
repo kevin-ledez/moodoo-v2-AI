@@ -1,0 +1,56 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block admin_content %}
+<div class="flex justify-between items-center mb-6">
+  <h1 class="text-2xl font-bold">Catégories</h1>
+  <a href="{{ path('admin_category_new') }}" class="btn btn-primary">
+    <i class="fas fa-plus"></i>
+    Nouvelle catégorie
+  </a>
+</div>
+
+<div class="overflow-x-auto">
+  <table class="table table-zebra">
+    <thead>
+      <tr>
+        <th>Nom</th>
+        <th>Description</th>
+        <th>Nombre d'articles</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for category in categories %}
+        <tr>
+          <td class="font-medium">{{ category.name }}</td>
+          <td>
+            {% if category.description %}
+              {{ category.description|slice(0, 100) }}{% if category.description|length > 100 %}...{% endif %}
+            {% endif %}
+          </td>
+          <td>{{ category.posts|length }}</td>
+          <td>
+            <div class="flex gap-2">
+              <a href="{{ path('admin_category_edit', {'id': category.id}) }}" class="btn btn-xs btn-info">
+                <i class="fas fa-edit"></i>
+                Modifier
+              </a>
+              <form method="post" action="{{ path('admin_category_delete', {'id': category.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette catégorie ?');">
+                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ category.id) }}">
+                <button type="submit" class="btn btn-xs btn-error">
+                  <i class="fas fa-trash"></i>
+                  Supprimer
+                </button>
+              </form>
+            </div>
+          </td>
+        </tr>
+      {% else %}
+        <tr>
+          <td colspan="4" class="text-center">Aucune catégorie trouvée</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

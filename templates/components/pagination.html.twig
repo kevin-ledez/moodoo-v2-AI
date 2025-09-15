@@ -1,0 +1,31 @@
+{% if totalPages > 1 %}
+  <div class="flex justify-center mt-8">
+    <div class="join">
+      {% if currentPage > 1 %}
+        <a href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params', {})|merge({'page': currentPage - 1})|merge(app.request.query.all)) }}" class="join-item btn btn-outline btn-primary">
+          « Précédent
+        </a>
+      {% endif %}
+      
+      {% for i in 1..totalPages %}
+        {% if i == currentPage %}
+          <button class="join-item btn btn-active btn-primary">{{ i }}</button>
+        {% elseif i <= 3 or i >= totalPages - 2 or (i >= currentPage - 1 and i <= currentPage + 1) %}
+          <a href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params', {})|merge({'page': i})|merge(app.request.query.all)) }}" class="join-item btn btn-outline btn-primary">
+            {{ i }}
+          </a>
+        {% elseif i == 4 and currentPage > 5 %}
+          <button class="join-item btn btn-disabled">...</button>
+        {% elseif i == totalPages - 3 and currentPage < totalPages - 4 and totalPages > 6 %}
+          <button class="join-item btn btn-disabled">...</button>
+        {% endif %}
+      {% endfor %}
+      
+      {% if currentPage < totalPages %}
+        <a href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params', {})|merge({'page': currentPage + 1})|merge(app.request.query.all)) }}" class="join-item btn btn-outline btn-primary">
+          Suivant »
+        </a>
+      {% endif %}
+    </div>
+  </div>
+{% endif %}

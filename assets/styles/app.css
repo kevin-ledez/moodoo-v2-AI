@@ -1,0 +1,70 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    @apply bg-base-100 text-base-content;
+}
+
+/* Custom styles for blog layout */
+.hero-banner {
+    @apply bg-gradient-to-r from-primary to-secondary text-primary-content;
+}
+
+.card-image {
+    @apply w-full h-48 object-cover;
+}
+
+.category-badge {
+    @apply badge badge-outline mr-1;
+}
+
+.post-meta {
+    @apply text-sm text-base-content/70;
+}
+
+.search-input {
+    @apply input input-bordered w-full max-w-xs;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .sidebar {
+        @apply mt-8;
+    }
+    
+    .post-grid {
+        @apply grid-cols-1;
+    }
+}
+
+/* Typography enhancements */
+.prose {
+    @apply max-w-none;
+}
+
+.prose h1, .prose h2, .prose h3 {
+    @apply text-base-content;
+}
+
+.prose p {
+    @apply text-base-content/90;
+}
+
+.prose a {
+    @apply link link-primary;
+}
+
+/* Navigation styles */
+.nav-link {
+    @apply px-3 py-2 rounded-md text-sm font-medium;
+}
+
+.nav-link.active {
+    @apply bg-primary text-primary-content;
+}
+
+/* Button variations */
+.btn-primary-outline {
+    @apply btn btn-outline btn-primary;
+}

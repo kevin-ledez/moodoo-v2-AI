@@ -1,0 +1,79 @@
+{% extends 'front/base.html.twig' %}
+
+{% block title %}Accueil - {{ parent() }}{% endblock %}
+
+{% block content %}
+<!-- Posts Grid -->
+{% if posts %}
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    {% for post in posts %}
+      <article class="card bg-white shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden rounded-lg article-card">
+        {% if post.featuredImageUrl %}
+          <figure class="h-48 overflow-hidden">
+            <img src="{{ post.featuredImageUrl }}" alt="{{ post.title }}" class="w-full h-full object-cover" />
+          </figure>
+        {% endif %}
+        <div class="card-body p-5">
+          <div class="flex flex-wrap gap-2 mb-3">
+            {% for category in post.categories %}
+              <a href="{{ path('app_category_show', {'slug': category.slug}) }}" class="category-badge text-xs px-2 py-1 rounded-full">
+                {{ category.name }}
+              </a>
+            {% endfor %}
+          </div>
+          <h3 class="card-title text-lg font-semibold m-0">
+            <a href="{{ path('app_post_show', {'slug': post.slug}) }}" class="link link-hover text-gray-800 hover:text-blue-600">
+              {{ post.title }}
+            </a>
+          </h3>
+          {% if post.excerpt %}
+            <p class="text-gray-600 text-sm mt-2">{{ post.excerpt|slice(0, 100) }}{% if post.excerpt|length > 100 %}...{% endif %}</p>
+          {% endif %}
+          <div class="card-actions justify-between items-center mt-4">
+            <div class="text-xs text-gray-500">
+              Publié le {{ post.publishedAt ? post.publishedAt|date('d/m/Y') : post.createdAt|date('d/m/Y') }}
+            </div>
+            <a href="{{ path('app_post_show', {'slug': post.slug}) }}" class="btn btn-sm btn-outline btn-primary">
+              Lire +
+            </a>
+          </div>
+        </div>
+      </article>
+    {% endfor %}
+  </div>
+  
+  <!-- Pagination -->
+  {% if totalPosts > postsPerPage %}
+    <div class="flex justify-center mt-8">
+      {% set totalPages = (totalPosts / postsPerPage)|round(0, 'ceil') %}
+      <div class="join">
+        {% if currentPage > 1 %}
+          <a href="{{ path('app_home', {page: currentPage - 1}) }}" class="join-item btn btn-outline">
+            <i class="fas fa-chevron-left"></i>
+          </a>
+        {% endif %}
+        
+        {% for i in 1..totalPages %}
+          {% if i == currentPage %}
+            <button class="join-item btn btn-active">{{ i }}</button>
+          {% else %}
+            <a href="{{ path('app_home', {page: i}) }}" class="join-item btn btn-outline">{{ i }}</a>
+          {% endif %}
+        {% endfor %}
+        
+        {% if currentPage < totalPages %}
+          <a href="{{ path('app_home', {page: currentPage + 1}) }}" class="join-item btn btn-outline">
+            <i class="fas fa-chevron-right"></i>
+          </a>
+        {% endif %}
+      </div>
+    </div>
+  {% endif %}
+{% else %}
+  <div class="text-center py-12">
+    <i class="fas fa-newspaper text-5xl text-gray-200 mb-4"></i>
+    <h3 class="text-xl font-bold mb-2">Aucun article disponible</h3>
+    <p class="text-gray-500">Il n'y a actuellement aucun article publié.</p>
+  </div>
+{% endif %}
+{% endblock %}

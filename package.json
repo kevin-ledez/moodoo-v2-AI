@@ -1,0 +1,22 @@
+{
+  "name": "moodoo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "build": "npx tailwindcss -i ./assets/styles/app.css -o ./assets/styles/output.css",
+    "watch": "npx tailwindcss -i ./assets/styles/app.css -o ./assets/styles/output.css --watch",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "daisyui": "^5.1.10",
+    "tailwindcss": "^4.1.13"
+  }
+}

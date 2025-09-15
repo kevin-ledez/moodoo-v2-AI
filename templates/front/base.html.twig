@@ -1,0 +1,105 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="flex flex-col min-h-screen">
+  <!-- Header -->
+  <header class="bg-white shadow-sm">
+    <div class="container mx-auto px-4">
+      <div class="navbar justify-between">
+        <div class="flex-1">
+          <a href="{{ path('app_home') }}" class="text-2xl font-bold normal-case px-0">moodoo</a>
+        </div>
+        
+        <!-- Categories Dropdown (Desktop) -->
+        <div class="flex-none hidden md:block">
+          <div class="dropdown dropdown-hover dropdown-bottom dropdown-end">
+            <div tabindex="0" role="button" class="btn btn-ghost btn-sm rounded-btn">
+              Catégories
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+            <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52 mt-2">
+              {% for category in categories %}
+                <li>
+                  <a href="{{ path('app_category_show', {'slug': category.slug}) }}" class="text-gray-700 hover:bg-gray-100">
+                    {{ category.name }}
+                    <span class="badge badge-sm bg-gray-100 text-gray-600">{{ category.postCount }}</span>
+                  </a>
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+        
+        <!-- Categories Dropdown (Mobile) -->
+        <div class="flex-none md:hidden">
+          <div class="dropdown dropdown-hover dropdown-bottom dropdown-end">
+            <div tabindex="0" role="button" class="btn btn-ghost btn-sm rounded-btn">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </div>
+            <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52 mt-2">
+              {% for category in categories %}
+                <li>
+                  <a href="{{ path('app_category_show', {'slug': category.slug}) }}" class="text-gray-700 hover:bg-gray-100">
+                    {{ category.name }}
+                  </a>
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+        
+        <div class="flex-none hidden lg:block">
+          <div class="form-control">
+            <form action="{{ path('app_search') }}" method="GET">
+              <div class="input-group">
+                <input type="text" name="q" placeholder="Rechercher..." class="input input-bordered input-sm" value="{{ app.request.query.get('q') }}">
+                <button class="btn btn-square btn-sm" type="submit">
+                  <i class="fas fa-search"></i>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="flex-none lg:hidden">
+          <label for="mobile-search-modal" class="btn btn-square btn-ghost btn-sm">
+            <i class="fas fa-search"></i>
+          </label>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile search modal -->
+  <input type="checkbox" id="mobile-search-modal" class="modal-toggle" />
+  <div class="modal">
+    <div class="modal-box">
+      <h3 class="font-bold text-lg mb-4">Rechercher</h3>
+      <form action="{{ path('app_search') }}" method="GET">
+        <div class="form-control">
+          <div class="input-group">
+            <input type="text" name="q" placeholder="Rechercher..." class="input input-bordered w-full" value="{{ app.request.query.get('q') }}">
+            <button class="btn btn-square" type="submit">
+              <i class="fas fa-search"></i>
+            </button>
+          </div>
+        </div>
+      </form>
+      <div class="modal-action">
+        <label for="mobile-search-modal" class="btn">Fermer</label>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <main class="flex-grow container mx-auto px-4 py-8">
+    <!-- Content Area (full width now) -->
+    <div>
+      {% block content %}{% endblock %}
+    </div>
+  </main>
+</div>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'front/base.html.twig' %}
+
+{% block title %}{{ post.title }} - {{ parent() }}{% endblock %}
+
+{% block content %}
+<article class="card bg-white shadow-sm rounded-lg overflow-hidden">
+  {% if post.featuredImageUrl %}
+    <figure class="h-96 overflow-hidden">
+      <img src="{{ post.featuredImageUrl }}" alt="{{ post.title }}" class="w-full h-full object-cover" />
+    </figure>
+  {% endif %}
+  <div class="card-body p-8">
+    <div class="flex flex-wrap gap-2 mb-4">
+      {% for category in post.categories %}
+        <a href="{{ path('app_category_show', {'slug': category.slug}) }}" class="category-badge text-xs px-3 py-1 rounded-full">
+          {{ category.name }}
+        </a>
+      {% endfor %}
+    </div>
+    
+    <h1 class="text-3xl font-bold mb-4 text-gray-800">{{ post.title }}</h1>
+    
+    <div class="text-sm text-gray-500 mb-8">
+      Publié le {{ post.publishedAt ? post.publishedAt|date('d/m/Y') : post.createdAt|date('d/m/Y') }}
+    </div>
+    
+    <div class="prose max-w-none text-gray-700">
+      {{ post.content|nl2br }}
+    </div>
+  </div>
+</article>
+
+<div class="mt-8">
+  <a href="{{ path('app_home') }}" class="btn btn-outline btn-primary">
+    <i class="fas fa-arrow-left mr-2"></i>
+    Retour aux articles
+  </a>
+</div>
+{% endblock %}

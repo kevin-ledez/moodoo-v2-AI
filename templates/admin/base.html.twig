@@ -1,0 +1,92 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Administration - {{ parent() }}{% endblock %}
+
+{% block body %}
+<div class="drawer lg:drawer-open">
+  <input id="drawer-admin" type="checkbox" class="drawer-toggle" />
+  <div class="drawer-content flex flex-col min-h-screen bg-gray-50">
+    <!-- Navbar -->
+    <div class="navbar bg-white border-b">
+      <div class="flex-none lg:hidden">
+        <label for="drawer-admin" aria-label="open sidebar" class="btn btn-square btn-ghost">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-5 h-5 stroke-current"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+        </label>
+      </div>
+      <div class="flex-1">
+        <a href="{{ path('admin_post_index') }}" class="btn btn-ghost text-xl normal-case font-bold">Administration</a>
+      </div>
+      <div class="flex-none">
+        <div class="dropdown dropdown-end">
+          <label tabindex="0" class="btn btn-ghost btn-circle avatar">
+            <div class="w-10 rounded-full">
+              <i class="fas fa-user-circle text-2xl"></i>
+            </div>
+          </label>
+          <ul tabindex="0" class="mt-3 p-2 shadow menu menu-compact dropdown-content bg-white rounded-box w-52 border">
+            <li>
+              <a href="{{ path('app_logout') }}" class="justify-between">
+                <i class="fas fa-sign-out-alt mr-2"></i>
+                Déconnexion
+              </a>
+            </li>
+          </ul>
+        </div>
+        <a href="{{ path('app_home') }}" class="btn btn-ghost">
+          <i class="fas fa-home mr-2"></i>
+          Retour au site
+        </a>
+      </div>
+    </div>
+    
+    <!-- Page content -->
+    <div class="flex-1 p-4 lg:p-6">
+      {% for message in app.flashes('success') %}
+        <div class="alert alert-success mb-4">
+          <span>{{ message }}</span>
+        </div>
+      {% endfor %}
+      
+      {% for message in app.flashes('error') %}
+        <div class="alert alert-error mb-4">
+          <span>{{ message }}</span>
+        </div>
+      {% endfor %}
+      
+      {% block admin_content %}{% endblock %}
+    </div>
+  </div>
+  
+  <div class="drawer-side z-10">
+    <label for="drawer-admin" aria-label="close sidebar" class="drawer-overlay"></label>
+    <ul class="menu p-4 w-64 min-h-full bg-white text-base-content border-r">
+      <!-- Sidebar content -->
+      <li>
+        <a href="{{ path('admin_home') }}" class="{% if app.request.attributes.get('_route') == 'admin_home' %}active bg-blue-50 text-blue-600 border-r-4 border-blue-600{% endif %} py-3">
+          <i class="fas fa-home mr-3"></i>
+          Tableau de bord
+        </a>
+      </li>
+      <li class="menu-title text-gray-500 mt-4">Contenu</li>
+      <li>
+        <a href="{{ path('admin_post_index') }}" class="{% if app.request.attributes.get('_route') starts with 'admin_post' %}active bg-blue-50 text-blue-600 border-r-4 border-blue-600{% endif %} py-3">
+          <i class="fas fa-newspaper mr-3"></i>
+          Articles
+        </a>
+      </li>
+      <li>
+        <a href="{{ path('admin_category_index') }}" class="{% if app.request.attributes.get('_route') starts with 'admin_category' %}active bg-blue-50 text-blue-600 border-r-4 border-blue-600{% endif %} py-3">
+          <i class="fas fa-tags mr-3"></i>
+          Catégories
+        </a>
+      </li>
+      <li>
+        <a href="{{ path('admin_comment_index') }}" class="{% if app.request.attributes.get('_route') starts with 'admin_comment' %}active bg-blue-50 text-blue-600 border-r-4 border-blue-600{% endif %} py-3">
+          <i class="fas fa-comments mr-3"></i>
+          Commentaires
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
+{% endblock %}
