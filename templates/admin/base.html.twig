@@ -86,6 +86,13 @@
           Commentaires
         </a>
       </li>
+      <li class="menu-title text-gray-500 mt-4">Navigation</li>
+      <li>
+        <a href="{{ path('admin_navigation_link_index') }}" class="{% if app.request.attributes.get('_route') starts with 'admin_navigation_link' %}active bg-blue-50 text-blue-600 border-r-4 border-blue-600{% endif %} py-3">
+          <i class="fas fa-link mr-3"></i>
+          Liens de navigation
+        </a>
+      </li>
     </ul>
   </div>
 </div>

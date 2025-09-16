@@ -1,0 +1,37 @@
+{{ form_start(form) }}
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="form-control">
+            {{ form_label(form.title) }}
+            {{ form_widget(form.title, {'attr': {'class': 'input input-bordered'}}) }}
+            {{ form_help(form.title) }}
+            {{ form_errors(form.title) }}
+        </div>
+        
+        <div class="form-control">
+            {{ form_label(form.url) }}
+            {{ form_widget(form.url, {'attr': {'class': 'input input-bordered'}}) }}
+            {{ form_help(form.url) }}
+            {{ form_errors(form.url) }}
+        </div>
+        
+        <div class="form-control">
+            {{ form_label(form.position) }}
+            {{ form_widget(form.position, {'attr': {'class': 'input input-bordered'}}) }}
+            {{ form_help(form.position) }}
+            {{ form_errors(form.position) }}
+        </div>
+        
+        <div class="form-control">
+            {{ form_label(form.isVisible) }}
+            <div class="mt-2">
+                {{ form_widget(form.isVisible, {'attr': {'class': 'toggle toggle-primary'}}) }}
+            </div>
+            {{ form_help(form.isVisible) }}
+            {{ form_errors(form.isVisible) }}
+        </div>
+    </div>
+    
+    <div class="mt-6">
+        <button class="btn btn-primary">{{ button_label|default('Enregistrer') }}</button>
+    </div>
+{{ form_end(form) }}

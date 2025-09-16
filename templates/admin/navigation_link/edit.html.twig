@@ -1,0 +1,22 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Modifier un lien de navigation{% endblock %}
+
+{% block admin_content %}
+    <div class="flex justify-between items-center mb-6">
+        <h1 class="text-2xl font-bold text-gray-800">Modifier un lien de navigation</h1>
+        <a href="{{ path('admin_navigation_link_index') }}" class="btn btn-outline">
+            <i class="fas fa-arrow-left mr-2"></i>
+            Retour à la liste
+        </a>
+    </div>
+
+    <div class="card bg-white shadow rounded-lg p-6">
+        {{ include('admin/navigation_link/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+        
+        <div class="divider"></div>
+        
+        <h2 class="text-lg font-bold text-gray-800 mb-4">Actions supplémentaires</h2>
+        {{ include('admin/navigation_link/_delete_form.html.twig') }}
+    </div>
+{% endblock %}

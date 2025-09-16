@@ -1,0 +1,6 @@
+<form method="post" action="{{ path('admin_navigation_link_delete', {'id': navigation_link.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce lien de navigation ?');">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ navigation_link.id) }}">
+    <button class="btn btn-sm btn-outline btn-error">
+        <i class="fas fa-trash"></i>
+    </button>
+</form>

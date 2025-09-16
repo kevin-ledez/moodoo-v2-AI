@@ -1,0 +1,68 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Liens de navigation{% endblock %}
+
+{% block admin_content %}
+    <div class="flex justify-between items-center mb-6">
+        <h1 class="text-2xl font-bold text-gray-800">Liens de navigation</h1>
+        <a href="{{ path('admin_navigation_link_new') }}" class="btn btn-primary">
+            <i class="fas fa-plus mr-2"></i>
+            Ajouter un lien
+        </a>
+    </div>
+
+    <div class="card bg-white shadow rounded-lg p-6">
+        {% if navigation_links|length > 0 %}
+            <div class="overflow-x-auto">
+                <table class="table w-full">
+                    <thead>
+                        <tr>
+                            <th>Titre</th>
+                            <th>URL</th>
+                            <th>Position</th>
+                            <th>Visible</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for navigation_link in navigation_links %}
+                        <tr>
+                            <td>{{ navigation_link.title }}</td>
+                            <td>{{ navigation_link.url }}</td>
+                            <td>{{ navigation_link.position }}</td>
+                            <td>
+                                {% if navigation_link.isVisible %}
+                                    <span class="badge badge-success">Oui</span>
+                                {% else %}
+                                    <span class="badge badge-error">Non</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <div class="flex space-x-2">
+                                    <a href="{{ path('admin_navigation_link_edit', {'id': navigation_link.id}) }}" class="btn btn-sm btn-outline btn-primary">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    {{ include('admin/navigation_link/_delete_form.html.twig') }}
+                                </div>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="5" class="text-center">Aucun lien trouvé</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div class="text-center py-8">
+                <i class="fas fa-link text-4xl text-gray-300 mb-4"></i>
+                <p class="text-gray-500">Aucun lien de navigation n'a été ajouté pour le moment.</p>
+                <a href="{{ path('admin_navigation_link_new') }}" class="btn btn-primary mt-4">
+                    <i class="fas fa-plus mr-2"></i>
+                    Ajouter votre premier lien
+                </a>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
