@@ -99,6 +99,13 @@
           Pages
         </a>
       </li>
+      <li class="menu-title text-gray-500 mt-4">Médias</li>
+      <li>
+        <a href="{{ path('admin_image_index') }}" class="{% if app.request.attributes.get('_route') starts with 'admin_image' %}active bg-blue-50 text-blue-600 border-r-4 border-blue-600{% endif %} py-3">
+          <i class="fas fa-images mr-3"></i>
+          Images
+        </a>
+      </li>
     </ul>
   </div>
 </div>

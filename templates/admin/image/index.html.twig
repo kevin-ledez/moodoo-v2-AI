@@ -1,0 +1,135 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Gestion des images{% endblock %}
+
+{% block admin_content %}
+<div class="flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-bold text-gray-800">Gestion des images</h1>
+</div>
+
+<!-- Notifications pour la copie -->
+<div id="copy-notification" class="fixed top-4 right-4 alert alert-success hidden z-50">
+    <span>Lien copié dans le presse-papier !</span>
+</div>
+
+<style>
+    .copy-link-btn {
+        transition: all 0.2s ease-in-out;
+    }
+    
+    .copy-link-btn:hover {
+        transform: scale(1.1);
+    }
+    
+    .copy-link-btn:active {
+        transform: scale(0.95);
+    }
+</style>
+
+<!-- Formulaire d'upload -->
+<div class="bg-white rounded-lg shadow p-6 mb-8">
+    <h2 class="text-lg font-semibold mb-4">Uploader une image</h2>
+    <form method="post" enctype="multipart/form-data">
+        <div class="flex items-center space-x-4">
+            <div class="form-control w-full max-w-xs">
+                <input type="file" name="image" accept="image/*" class="file-input file-input-bordered w-full max-w-xs" required />
+            </div>
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-upload mr-2"></i>
+                Uploader
+            </button>
+        </div>
+        <p class="text-sm text-gray-500 mt-2">Formats acceptés: JPG, PNG, GIF. Taille maximale: 2MB</p>
+    </form>
+</div>
+
+<!-- Liste des images -->
+<div class="bg-white rounded-lg shadow">
+    <div class="px-6 py-4 border-b border-gray-200">
+        <h2 class="text-lg font-semibold">Images disponibles</h2>
+    </div>
+    
+    {% if images is not empty %}
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-6">
+            {% for image in images %}
+                <div class="border rounded-lg overflow-hidden hover:shadow-md transition-shadow">
+                    <div class="aspect-square flex items-center justify-center bg-gray-100">
+                        <img src="{{ image.path }}" alt="{{ image.name }}" class="object-contain max-h-48">
+                    </div>
+                    <div class="p-4">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-sm font-medium text-gray-900 truncate">{{ image.name }}</h3>
+                            <div class="flex space-x-2">
+                                <button type="button" 
+                                        class="text-blue-500 hover:text-blue-700 copy-link-btn"
+                                        data-link="{{ url('app_home') ~ image.path }}"
+                                        title="Copier le lien">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                                <form method="post" action="{{ path('admin_image_delete', {'filename': image.name}) }}" 
+                                      onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette image ?')">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ image.name) }}">
+                                    <button type="submit" class="text-red-500 hover:text-red-700" title="Supprimer">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="flex justify-between text-xs text-gray-500">
+                            <span>{{ image.size }}</span>
+                            <span>{{ image.date|date('d/m/Y H:i') }}</span>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="p-12 text-center">
+            <i class="fas fa-image text-gray-300 text-4xl mb-4"></i>
+            <h3 class="text-lg font-medium text-gray-900 mb-2">Aucune image</h3>
+            <p class="text-gray-500">Commencez par uploader une image en utilisant le formulaire ci-dessus.</p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Gestion des boutons de copie
+            const copyButtons = document.querySelectorAll('.copy-link-btn');
+            const notification = document.getElementById('copy-notification');
+            
+            copyButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const link = this.getAttribute('data-link');
+                    
+                    // Copier dans le presse-papier
+                    navigator.clipboard.writeText(link).then(() => {
+                        // Afficher la notification
+                        notification.classList.remove('hidden');
+                        notification.classList.add('alert-success');
+                        notification.querySelector('span').textContent = 'Lien copié dans le presse-papier !';
+                        
+                        // Cacher après 3 secondes
+                        setTimeout(() => {
+                            notification.classList.add('hidden');
+                        }, 3000);
+                    }).catch(err => {
+                        // En cas d'erreur, afficher un message
+                        notification.classList.remove('hidden');
+                        notification.classList.remove('alert-success');
+                        notification.classList.add('alert-error');
+                        notification.querySelector('span').textContent = 'Erreur lors de la copie du lien';
+                        
+                        // Cacher après 3 secondes
+                        setTimeout(() => {
+                            notification.classList.add('hidden');
+                        }, 3000);
+                    });
+                });
+            });
+        });
+    </script>
+{% endblock %}
