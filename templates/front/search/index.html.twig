@@ -21,6 +21,11 @@
     <div class="grid grid-cols-1 gap-6">
       {% for post in posts %}
         <article class="card bg-white shadow-sm hover:shadow-md transition-all duration-300 rounded-lg overflow-hidden">
+          {% if post.featuredImageUrl %}
+            <figure class="h-48 overflow-hidden">
+              <img src="{{ post.featuredImageUrl }}" alt="{{ post.title }}" class="w-full h-full object-cover" />
+            </figure>
+          {% endif %}
           <div class="card-body p-5">
             <div class="flex flex-wrap gap-2 mb-3">
               {% for category in post.categories %}
