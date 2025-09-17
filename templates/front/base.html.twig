@@ -14,9 +14,15 @@
         {% if navigationLinks is defined and navigationLinks|length > 0 %}
           <div class="hidden md:flex space-x-1">
             {% for link in navigationLinks %}
-              <a href="{{ link.url }}" class="btn btn-ghost btn-sm rounded-btn">
-                {{ link.title }}
-              </a>
+              {% if link.url is defined %}
+                <a href="{{ link.url }}" class="btn btn-ghost btn-sm rounded-btn">
+                  {{ link.title }}
+                </a>
+              {% else %}
+                <a href="{{ path('app_page_show', {'slug': link.slug}) }}" class="btn btn-ghost btn-sm rounded-btn">
+                  {{ link.title }}
+                </a>
+              {% endif %}
             {% endfor %}
           </div>
         {% endif %}
@@ -54,11 +60,19 @@
             <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52 mt-2">
               {% if navigationLinks is defined and navigationLinks|length > 0 %}
                 {% for link in navigationLinks %}
-                  <li>
-                    <a href="{{ link.url }}" class="text-gray-700 hover:bg-gray-100">
-                      {{ link.title }}
-                    </a>
-                  </li>
+                  {% if link.url is defined %}
+                    <li>
+                      <a href="{{ link.url }}" class="text-gray-700 hover:bg-gray-100">
+                        {{ link.title }}
+                      </a>
+                    </li>
+                  {% else %}
+                    <li>
+                      <a href="{{ path('app_page_show', {'slug': link.slug}) }}" class="text-gray-700 hover:bg-gray-100">
+                        {{ link.title }}
+                      </a>
+                    </li>
+                  {% endif %}
                 {% endfor %}
                 <li class="divider"></li>
               {% endif %}

@@ -1,0 +1,61 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Nouvelle page - Administration{% endblock %}
+
+{% block admin_content %}
+<div class="flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-bold text-gray-800">Créer une nouvelle page</h1>
+    <a href="{{ path('admin_page_index') }}" class="btn btn-outline">
+        <i class="fas fa-arrow-left mr-2"></i>
+        Retour à la liste
+    </a>
+</div>
+
+<div class="bg-white rounded-lg shadow-md p-6">
+    {{ form_start(form) }}
+        <div class="space-y-4">
+            <div class="form-control">
+                {{ form_label(form.title, 'Titre', {'label_attr': {'class': 'label'}}) }}
+                <div class="w-full">
+                    {{ form_widget(form.title, {'attr': {'class': 'input input-bordered w-full'}}) }}
+                </div>
+                {{ form_errors(form.title) }}
+            </div>
+
+            <div class="form-control">
+                {{ form_label(form.slug, 'Slug (URL)', {'label_attr': {'class': 'label'}}) }}
+                <div class="w-full">
+                    {{ form_widget(form.slug, {'attr': {'class': 'input input-bordered w-full'}}) }}
+                </div>
+                <div class="label-text-alt text-gray-500 mt-1">
+                    Laissez vide pour générer automatiquement à partir du titre
+                </div>
+                {{ form_errors(form.slug) }}
+            </div>
+
+            <div class="form-control">
+                {{ form_label(form.content, 'Contenu', {'label_attr': {'class': 'label'}}) }}
+                <div class="w-full">
+                    {{ form_widget(form.content, {'attr': {'class': 'textarea textarea-bordered w-full h-64'}}) }}
+                </div>
+                {{ form_errors(form.content) }}
+            </div>
+
+            <div class="form-control">
+                <div class="flex items-center">
+                    {{ form_widget(form.showInMenu, {'attr': {'class': 'checkbox'}}) }}
+                    {{ form_label(form.showInMenu, 'Afficher dans le menu', {'label_attr': {'class': 'label-text ml-2'}}) }}
+                </div>
+                {{ form_errors(form.showInMenu) }}
+            </div>
+
+            <div class="form-control mt-6">
+                <button class="btn btn-primary">
+                    <i class="fas fa-save mr-2"></i>
+                    {{ button_label|default('Enregistrer') }}
+                </button>
+            </div>
+        </div>
+    {{ form_end(form) }}
+</div>
+{% endblock %}
