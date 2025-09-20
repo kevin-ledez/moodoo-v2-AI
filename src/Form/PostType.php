@@ -30,7 +30,7 @@ class PostType extends AbstractType
             ])
             ->add('content', TextareaType::class, [
                 'label' => 'Contenu',
-                'attr' => ['class' => 'textarea textarea-bordered w-full', 'rows' => 10]
+                'attr' => ['class' => 'textarea textarea-bordered w-full', 'rows' => 10, 'data-controller' => 'easymde']
             ])
             ->add('imageFile', VichImageType::class, [
                 'label' => 'Image à la une',

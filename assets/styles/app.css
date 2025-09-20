@@ -49,6 +49,7 @@ body {
 
 .prose p {
     @apply text-base-content/90;
+    margin-bottom: 1.25rem;
 }
 
 .prose a {
